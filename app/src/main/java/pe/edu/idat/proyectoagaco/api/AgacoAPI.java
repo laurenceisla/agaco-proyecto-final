@@ -7,7 +7,7 @@ public class AgacoAPI {
     }
 
     public static String obtenerToken() {
-        return "2|vn67rymK57Msb66L1QMLpKvkJz07BAFApFTPx2YE";
+        return "1|vK2dbd9ZLYD9gV65EqFHtiuXOXtWxAsrm6edLaYR";
     }
 
 }
