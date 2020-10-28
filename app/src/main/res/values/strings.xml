@@ -10,4 +10,16 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="lblTipoDocumento">Tipo de documento de identidad</string>
+    <string name="lblDistrito">Distrito</string>
+    <string name="lblProducto">Producto</string>
+    <string name="lblEtNroDocumento">Nro. documento de identidad</string>
+    <string name="lblEtApePaterno">Apellido paterno</string>
+    <string name="lblEtApeMaterno">Apellido materno</string>
+    <string name="lblEtNombres">Nombres</string>
+    <string name="lblEtDireccion">Dirección</string>
+    <string name="lblCbTransporte">Solicita transporte a domicilio</string>
+    <string name="lblCbArmado">Solicita armado a domicilio</string>
+    <string name="lblBtnFechaVenta">Seleccione fecha</string>
+    <string name="lblBtnRegistrar">Registrar venta</string>
 </resources>
