@@ -22,4 +22,9 @@
     <string name="lblCbArmado">Solicita armado a domicilio</string>
     <string name="lblBtnFechaVenta">Seleccione fecha</string>
     <string name="lblBtnRegistrar">Registrar venta</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu_ventas">Ventas</string>
+    <string name="menu_registro_venta">Registrar venta</string>
+    <string name="menu_asignacion_operador">Asignar operador</string>
 </resources>

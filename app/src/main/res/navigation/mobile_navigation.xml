@@ -3,23 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
-
+    app:startDestination="@id/nav_ventas">
     <fragment
-        android:id="@+id/nav_home"
-        android:name="pe.edu.idat.proyectoagaco.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
-
+        android:id="@+id/nav_ventas"
+        android:name="pe.edu.idat.proyectoagaco.ui.ListaVentasFragment"
+        android:label="Ventas"
+        tools:layout="@layout/fragment_lista_ventas" />
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="pe.edu.idat.proyectoagaco.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
-
+        android:id="@+id/nav_registro_venta"
+        android:name="pe.edu.idat.proyectoagaco.ui.RegistroVentaFragment"
+        android:label="Registrar venta"
+        tools:layout="@layout/fragment_registro_venta" />
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="pe.edu.idat.proyectoagaco.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_asignacion_operador"
+        android:name="pe.edu.idat.proyectoagaco.ui.AsignacionOperadorFragmen"
+        android:label="Asignar operador"
+        tools:layout="@layout/fragment_asignacion_operador" />
 </navigation>
