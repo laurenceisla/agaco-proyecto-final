@@ -68,6 +68,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             if (response != null) {
                                 Integer id = response.getInt("id");
                                 String nombre = response.getString("nombre");
+                                String email = response.getString("email");
                                 String perfil = response.getString("perfil");
                                 String token = response.getString("token");
 
@@ -75,6 +76,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                                 editor.putInt("id", id);
                                 editor.putString("nombre", nombre);
+                                editor.putString("email", email);
                                 editor.putString("perfil", perfil);
                                 editor.putString("token", token);
 

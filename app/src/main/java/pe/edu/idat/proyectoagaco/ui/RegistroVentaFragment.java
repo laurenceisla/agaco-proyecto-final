@@ -2,6 +2,8 @@ package pe.edu.idat.proyectoagaco.ui;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -154,8 +156,11 @@ public class RegistroVentaFragment extends Fragment
         ) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
+                SharedPreferences preferences = getContext().getSharedPreferences("agacoApp", Context.MODE_PRIVATE);
+                String token = preferences.getString("token", "");
+
                 Map<String, String>  params = new HashMap<String, String>();
-                params.put("Authorization", "Bearer " + AgacoAPI.obtenerToken());
+                params.put("Authorization", "Bearer " + token);
                 return params;
             }
         };

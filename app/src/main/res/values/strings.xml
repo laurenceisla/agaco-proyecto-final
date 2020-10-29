@@ -31,4 +31,9 @@
     <string name="hint_username">Email</string>
     <string name="hint_password">Contraseña</string>
     <string name="button_sign_in">Ingresar</string>
+    <string name="lblVentaNombresCliente">Cliente</string>
+    <string name="lblVentaFecha">Fecha</string>
+    <string name="lblVentaProducto">Producto</string>
+    <string name="lblVentaDireccion">Dirección</string>
+    <string name="lblBtnVentaDetalle">Ver detalle</string>
 </resources>
