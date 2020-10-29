@@ -6,6 +6,10 @@ public class AgacoAPI {
         return "http://192.168.1.5:8080/api/";
     }
 
+    public static String getDeviceName() {
+        return "ADVProyectoFinal";
+    }
+
     public static String obtenerToken() {
         return "1|vK2dbd9ZLYD9gV65EqFHtiuXOXtWxAsrm6edLaYR";
     }

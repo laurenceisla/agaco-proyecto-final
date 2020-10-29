@@ -1,6 +1,9 @@
 package pe.edu.idat.proyectoagaco;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 
@@ -8,6 +11,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -45,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        ocultarItemsSegunUsuario();
     }
 
     @Override
@@ -59,5 +65,29 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_logout) {
+            SharedPreferences.Editor editor = getSharedPreferences("agacoApp", MODE_PRIVATE).edit();
+            editor.clear();
+            editor.apply();
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void ocultarItemsSegunUsuario() {
+        SharedPreferences preferences = getSharedPreferences("agacoApp", MODE_PRIVATE);
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        Menu navMenu = navigationView.getMenu();
+
+        if (preferences.getString("perfil", "").equals("VENDEDOR")) {
+            navMenu.findItem(R.id.nav_asignacion_operador).setVisible(false);
+        }
     }
 }

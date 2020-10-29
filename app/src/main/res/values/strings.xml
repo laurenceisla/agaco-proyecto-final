@@ -5,7 +5,7 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_logout">Salir</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
@@ -27,4 +27,8 @@
     <string name="menu_ventas">Ventas</string>
     <string name="menu_registro_venta">Registrar venta</string>
     <string name="menu_asignacion_operador">Asignar operador</string>
+    <string name="text_signin_message">Bienvenido, acceda a su cuenta</string>
+    <string name="hint_username">Email</string>
+    <string name="hint_password">Contraseña</string>
+    <string name="button_sign_in">Ingresar</string>
 </resources>

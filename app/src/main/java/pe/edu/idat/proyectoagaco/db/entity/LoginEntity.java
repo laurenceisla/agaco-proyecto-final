@@ -7,13 +7,13 @@ import androidx.room.PrimaryKey;
 public class LoginEntity {
     @PrimaryKey
     public int id;
-    public String email;
+    public String nombre;
     public String token;
     public String perfil;
 
-    public LoginEntity(int id, String email, String token, String perfil) {
+    public LoginEntity(int id, String nombre, String token, String perfil) {
         this.id = id;
-        this.email = email;
+        this.nombre = nombre;
         this.token = token;
         this.perfil = perfil;
     }
@@ -27,11 +27,11 @@ public class LoginEntity {
     }
 
     public String getEmail() {
-        return email;
+        return nombre;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmail(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getToken() {
