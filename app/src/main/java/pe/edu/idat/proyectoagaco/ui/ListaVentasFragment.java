@@ -6,12 +6,15 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -38,6 +41,7 @@ public class ListaVentasFragment extends Fragment {
 
     private RecyclerView rvListaVentas;
     private VentaAdapter adapter;
+
     private boolean cargaOK = false;
     private String sgteUrl = null;
 
@@ -50,7 +54,24 @@ public class ListaVentasFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lista_ventas, container, false);
 
-        adapter = new VentaAdapter(getContext());
+        adapter = new VentaAdapter(
+                getContext(),
+                new VentaAdapter.VerDetalleClickListener() {
+                    @Override
+                    public void onBtnVerDetalleClick(View view, int position) {
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction().addToBackStack("what");
+                        DetalleVentaFragment detalleVentaFragment = new DetalleVentaFragment();
+                        String nombre = adapter.getVenta(position).getNombreCliente();
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString("nombre", nombre);
+                        detalleVentaFragment.setArguments(bundle);
+                        transaction.replace(R.id.nav_host_fragment, detalleVentaFragment);
+                        transaction.commit();
+                    }
+                }
+        );
+
         rvListaVentas = view.findViewById(R.id.rvListaVentas);
         rvListaVentas.setAdapter(adapter);
         rvListaVentas.setLayoutManager(new GridLayoutManager(getContext(), 2));
@@ -88,7 +109,8 @@ public class ListaVentasFragment extends Fragment {
     }
 
     private void fetchVentas() {
-        String url = sgteUrl == null ? AgacoAPI.getBaseUrl() + "ventas" : sgteUrl;
+        // String url = sgteUrl == null ? AgacoAPI.getBaseUrl() + "ventas" : sgteUrl;
+        String url = AgacoAPI.getBaseUrl() + "ventas";
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET,
@@ -130,7 +152,7 @@ public class ListaVentasFragment extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        error.printStackTrace();
                     }
                 }
         ) {

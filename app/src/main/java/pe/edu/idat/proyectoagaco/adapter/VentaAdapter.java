@@ -4,10 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -19,9 +22,11 @@ public class VentaAdapter
 
     private ArrayList<Venta> listaVentas;
     private Context context;
+    public VerDetalleClickListener verDetalleClickListener;
 
-    public VentaAdapter(Context context) {
+    public VentaAdapter(Context context, VerDetalleClickListener clickListener) {
         this.context = context;
+        this.verDetalleClickListener = clickListener;
         listaVentas = new ArrayList<>();
     }
 
@@ -42,7 +47,6 @@ public class VentaAdapter
         holder.tvVentaDireccion.setText(venta.getDireccion());
         holder.tvVentaFecha.setText(venta.getFechaVenta());
 
-
     }
 
     public void agregarVenta(ArrayList<Venta> listaVentas) {
@@ -57,6 +61,7 @@ public class VentaAdapter
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView tvVentaNombresCliente, tvVentaProducto, tvVentaDireccion, tvVentaFecha;
+        private FloatingActionButton btnVerDetalleVenta;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -65,8 +70,24 @@ public class VentaAdapter
             tvVentaProducto = itemView.findViewById(R.id.tvVentaProducto);
             tvVentaDireccion = itemView.findViewById(R.id.tvVentaDireccion);
             tvVentaFecha = itemView.findViewById(R.id.tvVentaFecha);
+            btnVerDetalleVenta = itemView.findViewById(R.id.btnVerDetalleVenta);
+
+            btnVerDetalleVenta.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    verDetalleClickListener.onBtnVerDetalleClick(view, getAdapterPosition());
+                }
+            });
 
         }
+    }
+
+    public Venta getVenta(int posicion) {
+        return this.listaVentas.get(posicion);
+    }
+
+    public interface VerDetalleClickListener {
+        void onBtnVerDetalleClick(View view, int position);
     }
 
 }
