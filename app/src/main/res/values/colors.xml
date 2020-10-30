@@ -11,6 +11,7 @@
     <color name="colorIcon">#cccccc</color>
     <color name="colorTextInputBackground">#F7F7F7</color>
     <color name="actionbarOpacity">#00000000</color>
+    <color name="title_text">#A483F8</color>
 
     <!--reds-->
     <color name="md_red_50">#FFEBEE</color>

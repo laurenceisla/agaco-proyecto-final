@@ -10,8 +10,4 @@ public class AgacoAPI {
         return "ADVProyectoFinal";
     }
 
-    public static String obtenerToken() {
-        return "1|vK2dbd9ZLYD9gV65EqFHtiuXOXtWxAsrm6edLaYR";
-    }
-
 }

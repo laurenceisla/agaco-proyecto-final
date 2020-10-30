@@ -61,10 +61,10 @@ public class ListaVentasFragment extends Fragment {
                     public void onBtnVerDetalleClick(View view, int position) {
                         FragmentTransaction transaction = getFragmentManager().beginTransaction().addToBackStack("what");
                         DetalleVentaFragment detalleVentaFragment = new DetalleVentaFragment();
-                        String nombre = adapter.getVenta(position).getNombreCliente();
+                        Integer id = adapter.getVenta(position).getId();
 
                         Bundle bundle = new Bundle();
-                        bundle.putString("nombre", nombre);
+                        bundle.putInt("id", id);
                         detalleVentaFragment.setArguments(bundle);
                         transaction.replace(R.id.nav_host_fragment, detalleVentaFragment);
                         transaction.commit();
@@ -128,13 +128,16 @@ public class ListaVentasFragment extends Fragment {
 
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                    listaVentas.add(new Venta(
-                                            jsonObject.getInt("id"),
-                                            jsonObject.getJSONObject("cliente").getString("nombre_completo"),
-                                            jsonObject.getJSONObject("producto").getString("nombre"),
-                                            jsonObject.getString("direccion_completa"),
-                                            jsonObject.getString("fecha_compra")
-                                    ));
+
+                                    Venta venta = new Venta();
+
+                                    venta.setId(jsonObject.getInt("id"));
+                                    venta.setNombreCliente(jsonObject.getJSONObject("cliente").getString("nombre_completo"));
+                                    venta.setProducto(jsonObject.getJSONObject("producto").getString("nombre"));
+                                    venta.setDireccion(jsonObject.getString("direccion_completa"));
+                                    venta.setFechaVenta(jsonObject.getString("fecha_compra"));
+
+                                    listaVentas.add(venta);
                                 }
 
                                 sgteUrl = response.getString("next_page_url");

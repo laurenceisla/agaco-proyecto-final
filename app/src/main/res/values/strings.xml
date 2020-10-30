@@ -36,4 +36,26 @@
     <string name="lblVentaProducto">Producto</string>
     <string name="lblVentaDireccion">Dirección</string>
     <string name="lblBtnVentaDetalle">Ver detalle</string>
+    <string name="lblEtTelefono">Teléfono</string>
+    <string name="datos_cliente">Datos Cliente</string>
+    <string name="valdatosventa">Datos Venta:</string>
+    <string name="valDNISeg">DNI:</string>
+    <string name="valAPEPATERSeg">Apellido Paterno:</string>
+    <string name="valAPEMATERNOSeg">Apellido Materno:</string>
+    <string name="valnombreseg">Nombres:</string>
+    <string name="valtelefonoseg">Telefono:</string>
+    <string name="valdireccionseg">Dirección:</string>
+    <string name="valdistritoseg">Distrito:</string>
+    <string name="valproductoseg">Producto:</string>
+    <string name="valfechaseg">Fecha Venta:</string>
+    <string name="valtransportedomseg">Transporte Domicilio</string>
+    <string name="valarmadodocseg">Armado Domicilio</string>
+    <string name="valdatostransporte">Datos Servicio de Transporte</string>
+    <string name="valestadotransporte">Estado Servicio:</string>
+    <string name="valfechatransporte">Fecha Servicio:</string>
+    <string name="valtransportista">Transportista:</string>
+    <string name="valdatosarmado">Datos Servicio de Armado</string>
+    <string name="valestadoarmado">Estado Servicio:</string>
+    <string name="valfechaarmado">Fecha Servicio:</string>
+    <string name="valespecialista">Especialista:</string>
 </resources>

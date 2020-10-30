@@ -3,10 +3,12 @@ package pe.edu.idat.proyectoagaco.ui;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +49,7 @@ public class RegistroVentaFragment extends Fragment
         implements AdapterView.OnItemSelectedListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     private Spinner spTipoDocumento, spDistrito, spProducto;
-    private EditText etNroDocumento, etApePaterno, etApeMaterno, etNombres, etDireccion;
+    private EditText etNroDocumento, etApePaterno, etApeMaterno, etNombres, etDireccion, etTelefono;
     private Button btnFechaVenta, btnRegistrarVenta;
     private TextView tvFechaVenta;
     private CheckBox cbTransporte, cbArmado;
@@ -56,6 +58,8 @@ public class RegistroVentaFragment extends Fragment
     private Integer idTipoDocumento, idDistrito, idProducto;
     private Integer dia, mes, anio, hora, minuto;
     private Integer selDia, selMes, selAnio, selHora, selMinuto;
+
+    private SharedPreferences preferences;
 
     public RegistroVentaFragment() {
         // Required empty public constructor
@@ -66,6 +70,8 @@ public class RegistroVentaFragment extends Fragment
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_registro_venta, container, false);
+
+        preferences = getContext().getSharedPreferences("agacoApp", Context.MODE_PRIVATE);
 
         spTipoDocumento = view.findViewById(R.id.spTipoDocumento);
         idsTiposDocumento = new ArrayList<>();
@@ -83,6 +89,7 @@ public class RegistroVentaFragment extends Fragment
         etApePaterno = view.findViewById(R.id.etApePaterno);
         etApeMaterno = view.findViewById(R.id.etApeMaterno);
         etNombres = view.findViewById(R.id.etNombres);
+        etTelefono = view.findViewById(R.id.etTelefono);
         etDireccion = view.findViewById(R.id.etDireccion);
         btnFechaVenta = view.findViewById(R.id.btnFechaVenta);
         tvFechaVenta = view.findViewById(R.id.tvFechaVenta);
@@ -124,6 +131,7 @@ public class RegistroVentaFragment extends Fragment
             data.put("ape_paterno", etApePaterno.getText().toString());
             data.put("ape_materno", etApeMaterno.getText().toString());
             data.put("nombres", etNombres.getText().toString());
+            data.put("telefono", etTelefono.getText().toString());
             data.put("direccion", etDireccion.getText().toString());
             data.put("distrito_id", idDistrito);
             data.put("producto_id", idProducto);
@@ -144,6 +152,11 @@ public class RegistroVentaFragment extends Fragment
                     @Override
                     public void onResponse(JSONObject response) {
                         Toast.makeText(getContext(), "Se guardó correctamente", Toast.LENGTH_SHORT).show();
+
+                        Fragment fragment = new ListaVentasFragment();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.nav_host_fragment, fragment).addToBackStack(null).commit();
                     }
                 },
                 new Response.ErrorListener() {
@@ -156,11 +169,11 @@ public class RegistroVentaFragment extends Fragment
         ) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                SharedPreferences preferences = getContext().getSharedPreferences("agacoApp", Context.MODE_PRIVATE);
                 String token = preferences.getString("token", "");
 
                 Map<String, String>  params = new HashMap<String, String>();
                 params.put("Authorization", "Bearer " + token);
+                params.put("Accept", "application/json");
                 return params;
             }
         };
@@ -200,8 +213,10 @@ public class RegistroVentaFragment extends Fragment
         ) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
+                String token = preferences.getString("token", "");
+
                 Map<String, String>  params = new HashMap<String, String>();
-                params.put("Authorization", "Bearer " + AgacoAPI.obtenerToken());
+                params.put("Authorization", "Bearer " + token);
                 return params;
             }
         };
