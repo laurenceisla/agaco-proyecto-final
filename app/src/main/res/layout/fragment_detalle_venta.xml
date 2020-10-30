@@ -15,7 +15,7 @@
         <GridLayout
             android:id="@+id/mainGrid"
             android:layout_width="416dp"
-            android:layout_height="950dp"
+            android:layout_height="1050dp"
             android:layout_weight="8"
             android:alignmentMode="alignMargins"
             android:columnCount="1"
@@ -413,26 +413,11 @@
                         android:layout_width="85dp"
                         android:layout_height="33dp"
                         android:layout_marginTop="15dp"
-                        android:background="@drawable/btn_default"
-                        android:drawableRight="@drawable/ic_save"
-                        android:textColor="@color/colorBackground"
-                        android:textSize="10sp"
+                        style="@style/Button1"
                         app:layout_constraintEnd_toStartOf="@+id/guideline5"
                         app:layout_constraintStart_toStartOf="@+id/guideline6"
                         app:layout_constraintTop_toBottomOf="@+id/tvDetTransportista"
-                        tools:text="Guardar" />
-
-                    <Button
-                        android:layout_width="85dp"
-                        android:layout_height="33dp"
-                        android:layout_marginTop="15dp"
-                        android:background="@drawable/btn_default"
-                        android:textColor="@color/colorBackground"
-                        android:textSize="10sp"
-                        app:layout_constraintEnd_toStartOf="@+id/guideline6"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView29"
-                        tools:text="Atras" />
+                        tools:text="@string/lblBtnAsignarOperador" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -556,26 +541,11 @@
                         android:layout_width="85dp"
                         android:layout_height="33dp"
                         android:layout_marginTop="15dp"
-                        android:background="@drawable/btn_default"
-                        android:drawableRight="@drawable/ic_save"
-                        android:textColor="@color/colorBackground"
-                        android:textSize="10sp"
+                        style="@style/Button1"
                         app:layout_constraintEnd_toStartOf="@+id/guideline8"
                         app:layout_constraintStart_toStartOf="@+id/guideline9"
                         app:layout_constraintTop_toBottomOf="@+id/tvDetEspecialista"
-                        tools:text="Guardar" />
-
-                    <Button
-                        android:layout_width="85dp"
-                        android:layout_height="33dp"
-                        android:layout_marginTop="15dp"
-                        android:background="@drawable/btn_default"
-                        android:textColor="@color/colorBackground"
-                        android:textSize="10sp"
-                        app:layout_constraintEnd_toStartOf="@+id/guideline9"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView33"
-                        tools:text="Atras" />
+                        tools:text="@string/lblBtnAsignarOperador" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
