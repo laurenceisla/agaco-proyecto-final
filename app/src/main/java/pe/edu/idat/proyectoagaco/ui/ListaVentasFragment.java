@@ -59,7 +59,7 @@ public class ListaVentasFragment extends Fragment {
                 new VentaAdapter.VerDetalleClickListener() {
                     @Override
                     public void onBtnVerDetalleClick(View view, int position) {
-                        FragmentTransaction transaction = getFragmentManager().beginTransaction().addToBackStack("what");
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction().addToBackStack("");
                         DetalleVentaFragment detalleVentaFragment = new DetalleVentaFragment();
                         Integer id = adapter.getVenta(position).getId();
 

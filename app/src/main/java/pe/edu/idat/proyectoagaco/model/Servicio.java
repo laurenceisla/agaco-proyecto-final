@@ -4,6 +4,7 @@ public class Servicio {
 
     private int id;
     private String tipoServicio;
+    private Integer idEspecialista;
     private String nombreEspecialista;
     private String fecha;
     private String estado;
@@ -11,9 +12,10 @@ public class Servicio {
     public Servicio() {
     }
 
-    public Servicio(int id, String tipoServicio, String nombreEspecialista, String fecha, String estado) {
+    public Servicio(int id, String tipoServicio, Integer idEspecialista, String nombreEspecialista, String fecha, String estado) {
         this.id = id;
         this.tipoServicio = tipoServicio;
+        this.idEspecialista = idEspecialista;
         this.nombreEspecialista = nombreEspecialista;
         this.fecha = fecha;
         this.estado = estado;
@@ -33,6 +35,14 @@ public class Servicio {
 
     public void setTipoServicio(String tipoServicio) {
         this.tipoServicio = tipoServicio;
+    }
+
+    public Integer getIdEspecialista() {
+        return idEspecialista;
+    }
+
+    public void setIdEspecialista(Integer idEspecialista) {
+        this.idEspecialista = idEspecialista;
     }
 
     public String getNombreEspecialista() {

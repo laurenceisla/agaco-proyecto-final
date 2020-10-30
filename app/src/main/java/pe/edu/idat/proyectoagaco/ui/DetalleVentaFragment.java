@@ -5,10 +5,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,11 +27,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import pe.edu.idat.proyectoagaco.R;
 import pe.edu.idat.proyectoagaco.api.AgacoAPI;
+import pe.edu.idat.proyectoagaco.model.Servicio;
+import pe.edu.idat.proyectoagaco.model.Venta;
 
 
 public class DetalleVentaFragment extends Fragment {
@@ -38,6 +43,11 @@ public class DetalleVentaFragment extends Fragment {
     tvDetDireccion, tvDetDistrito, tvDetProducto, tvDetFechaVenta, tvDetEstadoTransporte,
     tvDetFechaTransporte, tvDetTransportista, tvDetEstadoArmado, tvDetFechaArmado, tvDetEspecialista;
     private CheckBox cbDetTransporte, cbDetArmado;
+    private Button btnAsignarTransportista, btnAsignarEspecialista;
+
+    private Venta venta;
+    private Servicio servicioTransporte;
+    private Servicio servicioArmado;
 
     public DetalleVentaFragment() {
         // Required empty public constructor
@@ -69,10 +79,59 @@ public class DetalleVentaFragment extends Fragment {
         tvDetFechaArmado = view.findViewById(R.id.tvDetFechaArmado);
         tvDetEspecialista = view.findViewById(R.id.tvDetEspecialista);
 
+        btnAsignarTransportista = view.findViewById(R.id.btnAsignarTransportista);
+        btnAsignarEspecialista = view.findViewById(R.id.btnAsignarEspecialista);
+
+
         Bundle bundle = getArguments();
         Integer id = bundle.getInt("id", 0);
 
         fetchVenta(id);
+
+        btnAsignarTransportista.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction().addToBackStack("");
+                AsignacionOperadorFragmen asignacionOperadorFragmen = new AsignacionOperadorFragmen();
+
+                Bundle bundle = new Bundle();
+                bundle.putInt("idVenta", venta.getId());
+                bundle.putString("tipoServicio", "TRANSPORTE");
+
+                if (servicioTransporte != null) {
+                    bundle.putInt("idServicio", servicioTransporte.getId());
+                    bundle.putInt("idOperador", servicioTransporte.getIdEspecialista());
+                    bundle.putString("nombreOperador", servicioTransporte.getNombreEspecialista());
+                    bundle.putString("fecha", servicioTransporte.getFecha());
+                }
+
+                asignacionOperadorFragmen.setArguments(bundle);
+                transaction.replace(R.id.nav_host_fragment, asignacionOperadorFragmen);
+                transaction.commit();
+            }
+        });
+
+        btnAsignarEspecialista.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction().addToBackStack("");
+                AsignacionOperadorFragmen asignacionOperadorFragmen = new AsignacionOperadorFragmen();
+
+                Bundle bundle = new Bundle();
+                bundle.putInt("idVenta", venta.getId());
+                bundle.putString("tipoServicio", "ARMADO");
+
+                if (servicioArmado != null) {
+                    bundle.putInt("idOperador", servicioArmado.getIdEspecialista());
+                    bundle.putString("nombreOperador", servicioArmado.getNombreEspecialista());
+                    bundle.putString("fecha", servicioArmado.getFecha());
+                }
+
+                asignacionOperadorFragmen.setArguments(bundle);
+                transaction.replace(R.id.nav_host_fragment, asignacionOperadorFragmen);
+                transaction.commit();
+            }
+        });
 
         return view;
     }
@@ -88,33 +147,74 @@ public class DetalleVentaFragment extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            tvDetNroDocumento.setText(response.getJSONObject("cliente").getString("nro_documento"));
-                            tvDetApePaterno.setText(response.getJSONObject("cliente").getString("ape_paterno"));
-                            tvDetApeMaterno.setText(response.getJSONObject("cliente").getString("ape_materno"));
-                            tvDetNombres.setText(response.getJSONObject("cliente").getString("nombres"));
-                            tvDetTelefono.setText(response.getString("telefono"));
-                            tvDetDireccion.setText(response.getString("direccion"));
-                            tvDetDistrito.setText(response.getJSONObject("distrito").getString("nombre"));
-                            tvDetProducto.setText(response.getJSONObject("producto").getString("nombre"));
-                            tvDetFechaVenta.setText(response.getString("fecha_compra"));
-                            cbDetTransporte.setChecked(response.getInt("solicita_entrega") == 1);
-                            cbDetArmado.setChecked(response.getInt("solicita_armado") == 1);
+                            venta = new Venta(
+                                    response.getInt("id"),
+                                    "",
+                                    response.getJSONObject("cliente").getJSONObject("tipo_documento_identidad").getString("abreviatura"),
+                                    response.getJSONObject("cliente").getString("nro_documento"),
+                                    response.getJSONObject("cliente").getString("ape_paterno"),
+                                    response.getJSONObject("cliente").getString("ape_materno"),
+                                    response.getJSONObject("cliente").getString("nombres"),
+                                    response.getString("telefono"),
+                                    response.getJSONObject("producto").getString("nombre"),
+                                    response.getString("direccion"),
+                                    response.getJSONObject("distrito").getString("nombre"),
+                                    response.getString("fecha_compra"),
+                                    response.getInt("solicita_entrega") == 1,
+                                    response.getInt("solicita_armado") == 1,
+                                    new ArrayList<Servicio>()
+                            );
+
+                            tvDetNroDocumento.setText(venta.getNroDocumentoIdentidad());
+                            tvDetApePaterno.setText(venta.getApePaterno());
+                            tvDetApeMaterno.setText(venta.getApeMaterno());
+                            tvDetNombres.setText(venta.getNombres());
+                            tvDetTelefono.setText(venta.getTelefono());
+                            tvDetDireccion.setText(venta.getDireccion());
+                            tvDetDistrito.setText(venta.getDistrito());
+                            tvDetProducto.setText(venta.getProducto());
+                            tvDetFechaVenta.setText(venta.getFechaVenta());
+                            cbDetTransporte.setChecked(venta.isSolicitaEntrega());
+                            cbDetArmado.setChecked(venta.isSolicitaArmado());
 
                             JSONArray servicios = response.getJSONArray("servicios");
-                            JSONObject transporte = new JSONObject();
-                            JSONObject armado = new JSONObject();
 
                             if (servicios.length() > 0) {
                                 for (int i = 0; i < servicios.length(); i++) {
-                                    if (servicios.getJSONObject(i).getJSONObject("tipo_servicio").getInt("id") == 1) {
-                                        tvDetEstadoTransporte.setText(response.getString("estado"));
-                                        tvDetFechaTransporte.setText(response.getString("fecha_servicio"));
-                                        tvDetTransportista.setText(response.getJSONObject("operador").getString("nombre"));
+
+                                    JSONObject servicio = servicios.getJSONObject(i);
+
+                                    if (servicio.getJSONObject("tipo_servicio").getInt("id") == 1) {
+                                        servicioTransporte = new Servicio(
+                                                servicio.getInt("id"),
+                                                servicio.getJSONObject("tipo_servicio").getString("nombre"),
+                                                servicio.getJSONObject("operador").getInt("id"),
+                                                servicio.getJSONObject("operador").getString("nombre"),
+                                                servicio.getString("fecha_servicio"),
+                                                servicio.getString("estado")
+                                        );
+
+                                        venta.getServicios().add(servicioTransporte);
+
+                                        tvDetEstadoTransporte.setText(servicioTransporte.getEstado());
+                                        tvDetFechaTransporte.setText(servicioTransporte.getFecha());
+                                        tvDetTransportista.setText(servicioTransporte.getNombreEspecialista());
                                     }
                                     else {
-                                        tvDetEstadoArmado.setText(response.getString("estado"));
-                                        tvDetFechaArmado.setText(response.getString("fecha_servicio"));
-                                        tvDetEspecialista.setText(response.getJSONObject("operador").getString("nombre"));
+                                        servicioArmado = new Servicio(
+                                                servicio.getInt("id"),
+                                                servicio.getJSONObject("tipo_servicio").getString("nombre"),
+                                                servicio.getJSONObject("operador").getInt("id"),
+                                                servicio.getJSONObject("operador").getString("nombre"),
+                                                servicio.getString("fecha_servicio"),
+                                                servicio.getString("estado")
+                                        );
+
+                                        venta.getServicios().add(servicioArmado);
+
+                                        tvDetEstadoArmado.setText(servicioArmado.getEstado());
+                                        tvDetFechaArmado.setText(servicioArmado.getFecha());
+                                        tvDetEspecialista.setText(servicioArmado.getNombreEspecialista());
                                     }
                                 }
                             }

@@ -409,7 +409,7 @@
                         app:layout_constraintGuide_begin="162dp" />
 
                     <Button
-                        android:id="@+id/button2"
+                        android:id="@+id/btnAsignarTransportista"
                         android:layout_width="85dp"
                         android:layout_height="33dp"
                         android:layout_marginTop="15dp"
@@ -552,7 +552,7 @@
                         app:layout_constraintGuide_begin="162dp" />
 
                     <Button
-                        android:id="@+id/button3"
+                        android:id="@+id/btnAsignarEspecialista"
                         android:layout_width="85dp"
                         android:layout_height="33dp"
                         android:layout_marginTop="15dp"

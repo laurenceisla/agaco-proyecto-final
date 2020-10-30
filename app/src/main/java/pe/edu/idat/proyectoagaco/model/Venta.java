@@ -1,11 +1,14 @@
 package pe.edu.idat.proyectoagaco.model;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Venta {
 
     private int id;
     private String nombreCliente;
+    private String tipoDocumentoIdentidad;
+    private String nroDocumentoIdentidad;
     private String apePaterno;
     private String apeMaterno;
     private String nombres;
@@ -14,15 +17,19 @@ public class Venta {
     private String direccion;
     private String distrito;
     private String fechaVenta;
+    private boolean solicitaEntrega;
+    private boolean solicitaArmado;
 
-    private Servicio servicio;
+    private List<Servicio> servicios;
 
     public Venta() {
     }
 
-    public Venta(int id, String nombreCliente, String apePaterno, String apeMaterno, String nombres, String telefono, String producto, String direccion, String distrito, String fechaVenta, Servicio servicio) {
+    public Venta(int id, String nombreCliente, String tipoDocumentoIdentidad, String nroDocumentoIdentidad, String apePaterno, String apeMaterno, String nombres, String telefono, String producto, String direccion, String distrito, String fechaVenta, boolean solicitaEntrega, boolean solicitaArmado, List<Servicio> servicios) {
         this.id = id;
         this.nombreCliente = nombreCliente;
+        this.tipoDocumentoIdentidad = tipoDocumentoIdentidad;
+        this.nroDocumentoIdentidad = nroDocumentoIdentidad;
         this.apePaterno = apePaterno;
         this.apeMaterno = apeMaterno;
         this.nombres = nombres;
@@ -31,7 +38,9 @@ public class Venta {
         this.direccion = direccion;
         this.distrito = distrito;
         this.fechaVenta = fechaVenta;
-        this.servicio = servicio;
+        this.solicitaEntrega = solicitaEntrega;
+        this.solicitaArmado = solicitaArmado;
+        this.servicios = servicios;
     }
 
     public int getId() {
@@ -48,6 +57,22 @@ public class Venta {
 
     public void setNombreCliente(String nombreCliente) {
         this.nombreCliente = nombreCliente;
+    }
+
+    public String getTipoDocumentoIdentidad() {
+        return tipoDocumentoIdentidad;
+    }
+
+    public void setTipoDocumentoIdentidad(String tipoDocumentoIdentidad) {
+        this.tipoDocumentoIdentidad = tipoDocumentoIdentidad;
+    }
+
+    public String getNroDocumentoIdentidad() {
+        return nroDocumentoIdentidad;
+    }
+
+    public void setNroDocumentoIdentidad(String nroDocumentoIdentidad) {
+        this.nroDocumentoIdentidad = nroDocumentoIdentidad;
     }
 
     public String getApePaterno() {
@@ -114,12 +139,28 @@ public class Venta {
         this.fechaVenta = fechaVenta;
     }
 
-    public Servicio getServicio() {
-        return servicio;
+    public boolean isSolicitaEntrega() {
+        return solicitaEntrega;
     }
 
-    public void setServicio(Servicio servicio) {
-        this.servicio = servicio;
+    public void setSolicitaEntrega(boolean solicitaEntrega) {
+        this.solicitaEntrega = solicitaEntrega;
+    }
+
+    public boolean isSolicitaArmado() {
+        return solicitaArmado;
+    }
+
+    public void setSolicitaArmado(boolean solicitaArmado) {
+        this.solicitaArmado = solicitaArmado;
+    }
+
+    public List<Servicio> getServicios() {
+        return servicios;
+    }
+
+    public void setServicio(List<Servicio> servicios) {
+        this.servicios = servicios;
     }
 }
 

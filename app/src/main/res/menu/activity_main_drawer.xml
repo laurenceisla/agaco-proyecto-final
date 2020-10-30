@@ -12,9 +12,5 @@
             android:id="@+id/nav_registro_venta"
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/menu_registro_venta" />
-        <item
-            android:id="@+id/nav_asignacion_operador"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_asignacion_operador" />
     </group>
 </menu>

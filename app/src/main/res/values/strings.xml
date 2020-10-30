@@ -58,4 +58,6 @@
     <string name="valestadoarmado">Estado Servicio:</string>
     <string name="valfechaarmado">Fecha Servicio:</string>
     <string name="valespecialista">Especialista:</string>
+    <string name="lblBtnCancelar">Cancelar</string>
+    <string name="lblBtnAsignarOperador">Asignar</string>
 </resources>

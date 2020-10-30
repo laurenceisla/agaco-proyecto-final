@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_ventas, R.id.nav_registro_venta, R.id.nav_asignacion_operador)
+                R.id.nav_ventas, R.id.nav_registro_venta)
                 .setDrawerLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -108,10 +108,6 @@ public class MainActivity extends AppCompatActivity {
 
         if (!perfil.equals("VENDEDOR")) {
             navMenu.findItem(R.id.nav_registro_venta).setVisible(false);
-        }
-
-        if (!perfil.equals("COORDINADOR")) {
-            navMenu.findItem(R.id.nav_asignacion_operador).setVisible(false);
         }
     }
 }
