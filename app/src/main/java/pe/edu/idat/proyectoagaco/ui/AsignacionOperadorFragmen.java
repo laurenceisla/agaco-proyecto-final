@@ -78,7 +78,6 @@ public class AsignacionOperadorFragmen extends Fragment
         idOperador = bundle.getInt("idOperador", 0);
         nombreOperador = bundle.getString("nombreOperador", "");
         fecha = bundle.getString("fecha", "");
-
         spOperador = view.findViewById(R.id.spOperador);
         idsOperadores = new ArrayList<>();
         setOperadoresSpinner();

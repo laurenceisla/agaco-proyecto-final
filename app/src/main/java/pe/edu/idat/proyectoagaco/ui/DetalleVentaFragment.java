@@ -49,6 +49,8 @@ public class DetalleVentaFragment extends Fragment {
     private Servicio servicioTransporte;
     private Servicio servicioArmado;
 
+    SharedPreferences preferences;
+
     public DetalleVentaFragment() {
         // Required empty public constructor
     }
@@ -57,6 +59,8 @@ public class DetalleVentaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_detalle_venta, container, false);
+
+        preferences = getContext().getSharedPreferences("agacoApp", Context.MODE_PRIVATE);
 
         tvDetNroDocumento = view.findViewById(R.id.tvDetNroDocumento);
         tvDetApePaterno = view.findViewById(R.id.tvDetApePaterno);
@@ -82,6 +86,30 @@ public class DetalleVentaFragment extends Fragment {
         btnAsignarTransportista = view.findViewById(R.id.btnAsignarTransportista);
         btnAsignarEspecialista = view.findViewById(R.id.btnAsignarEspecialista);
 
+        String lblAsignar = "Asignar";
+        String lblCerrar = "Cerrar";
+
+        if (preferences.getString("perfil", "").equals("COORDINADOR")) {
+            btnAsignarTransportista.setText(lblAsignar);
+            btnAsignarEspecialista.setText(lblAsignar);
+        }
+        else {
+            btnAsignarTransportista.setText(lblCerrar);
+            btnAsignarEspecialista.setText(lblCerrar);
+        }
+
+        if (preferences.getString("perfil", "").equals("VENDEDOR")) {
+            btnAsignarEspecialista.setVisibility(View.GONE);
+            btnAsignarTransportista.setVisibility(View.GONE);
+        }
+
+        if (preferences.getString("perfil", "").equals("TRANSPORTISTA")) {
+            btnAsignarEspecialista.setVisibility(View.GONE);
+        }
+
+        if (preferences.getString("perfil", "").equals("ESPECIALISTA")) {
+            btnAsignarTransportista.setVisibility(View.GONE);
+        }
 
         Bundle bundle = getArguments();
         Integer id = bundle.getInt("id", 0);
@@ -92,22 +120,41 @@ public class DetalleVentaFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction().addToBackStack("");
-                AsignacionOperadorFragmen asignacionOperadorFragmen = new AsignacionOperadorFragmen();
 
-                Bundle bundle = new Bundle();
-                bundle.putInt("idVenta", venta.getId());
-                bundle.putString("tipoServicio", "TRANSPORTE");
+                if (preferences.getString("perfil", "").equals("COORDINADOR")) {
+                    AsignacionOperadorFragmen asignacionOperadorFragmen = new AsignacionOperadorFragmen();
 
-                if (servicioTransporte != null) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("idVenta", venta.getId());
+                    bundle.putString("tipoServicio", "TRANSPORTE");
+
+                    if (servicioTransporte != null) {
+                        bundle.putInt("idServicio", servicioTransporte.getId());
+                        bundle.putInt("idOperador", servicioTransporte.getIdEspecialista());
+                        bundle.putString("nombreOperador", servicioTransporte.getNombreEspecialista());
+                        bundle.putString("fecha", servicioTransporte.getFecha());
+                    }
+
+                    asignacionOperadorFragmen.setArguments(bundle);
+                    transaction.replace(R.id.nav_host_fragment, asignacionOperadorFragmen);
+                    transaction.commit();
+                }
+                else {
+                    CerrarFragment cerrarFragment = new CerrarFragment();
+
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("idVenta", venta.getId());
                     bundle.putInt("idServicio", servicioTransporte.getId());
-                    bundle.putInt("idOperador", servicioTransporte.getIdEspecialista());
-                    bundle.putString("nombreOperador", servicioTransporte.getNombreEspecialista());
-                    bundle.putString("fecha", servicioTransporte.getFecha());
+
+                    if (servicioTransporte != null) {
+                        bundle.putString("fecha", servicioTransporte.getFecha());
+                    }
+
+                    cerrarFragment.setArguments(bundle);
+                    transaction.replace(R.id.nav_host_fragment, cerrarFragment);
+                    transaction.commit();
                 }
 
-                asignacionOperadorFragmen.setArguments(bundle);
-                transaction.replace(R.id.nav_host_fragment, asignacionOperadorFragmen);
-                transaction.commit();
             }
         });
 
@@ -115,21 +162,40 @@ public class DetalleVentaFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction().addToBackStack("");
-                AsignacionOperadorFragmen asignacionOperadorFragmen = new AsignacionOperadorFragmen();
 
-                Bundle bundle = new Bundle();
-                bundle.putInt("idVenta", venta.getId());
-                bundle.putString("tipoServicio", "ARMADO");
+                if (preferences.getString("perfil", "").equals("COORDINADOR")) {
+                    AsignacionOperadorFragmen asignacionOperadorFragmen = new AsignacionOperadorFragmen();
 
-                if (servicioArmado != null) {
-                    bundle.putInt("idOperador", servicioArmado.getIdEspecialista());
-                    bundle.putString("nombreOperador", servicioArmado.getNombreEspecialista());
-                    bundle.putString("fecha", servicioArmado.getFecha());
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("idVenta", venta.getId());
+                    bundle.putString("tipoServicio", "ARMADO");
+
+                    if (servicioArmado != null) {
+                        bundle.putInt("idServicio", servicioArmado.getId());
+                        bundle.putInt("idOperador", servicioArmado.getIdEspecialista());
+                        bundle.putString("nombreOperador", servicioArmado.getNombreEspecialista());
+                        bundle.putString("fecha", servicioArmado.getFecha());
+                    }
+
+                    asignacionOperadorFragmen.setArguments(bundle);
+                    transaction.replace(R.id.nav_host_fragment, asignacionOperadorFragmen);
+                    transaction.commit();
                 }
+                else {
+                    CerrarFragment cerrarFragment = new CerrarFragment();
 
-                asignacionOperadorFragmen.setArguments(bundle);
-                transaction.replace(R.id.nav_host_fragment, asignacionOperadorFragmen);
-                transaction.commit();
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("idVenta", venta.getId());
+                    bundle.putInt("idServicio", servicioArmado.getId());
+
+                    if (servicioArmado != null) {
+                        bundle.putString("fecha", servicioArmado.getFecha());
+                    }
+
+                    cerrarFragment.setArguments(bundle);
+                    transaction.replace(R.id.nav_host_fragment, cerrarFragment);
+                    transaction.commit();
+                }
             }
         });
 
@@ -177,6 +243,14 @@ public class DetalleVentaFragment extends Fragment {
                             cbDetTransporte.setChecked(venta.isSolicitaEntrega());
                             cbDetArmado.setChecked(venta.isSolicitaArmado());
 
+                            if (!venta.isSolicitaArmado()) {
+                                btnAsignarEspecialista.setVisibility(View.GONE);
+                            }
+
+                            if (!venta.isSolicitaEntrega()) {
+                                btnAsignarTransportista.setVisibility(View.GONE);
+                            }
+
                             JSONArray servicios = response.getJSONArray("servicios");
 
                             if (servicios.length() > 0) {
@@ -193,12 +267,16 @@ public class DetalleVentaFragment extends Fragment {
                                                 servicio.getString("fecha_servicio"),
                                                 servicio.getString("estado")
                                         );
-
                                         venta.getServicios().add(servicioTransporte);
 
                                         tvDetEstadoTransporte.setText(servicioTransporte.getEstado());
                                         tvDetFechaTransporte.setText(servicioTransporte.getFecha());
                                         tvDetTransportista.setText(servicioTransporte.getNombreEspecialista());
+
+                                        if (servicioTransporte.getEstado().equals("FINALIZADO")) {
+                                            btnAsignarTransportista.setVisibility(View.GONE);
+                                        }
+
                                     }
                                     else {
                                         servicioArmado = new Servicio(
@@ -215,6 +293,10 @@ public class DetalleVentaFragment extends Fragment {
                                         tvDetEstadoArmado.setText(servicioArmado.getEstado());
                                         tvDetFechaArmado.setText(servicioArmado.getFecha());
                                         tvDetEspecialista.setText(servicioArmado.getNombreEspecialista());
+
+                                        if (servicioArmado.getEstado().equals("FINALIZADO")) {
+                                            btnAsignarEspecialista.setVisibility(View.GONE);
+                                        }
                                     }
                                 }
                             }
@@ -233,7 +315,6 @@ public class DetalleVentaFragment extends Fragment {
                 }
         ) {
             public Map<String, String> getHeaders() throws AuthFailureError {
-                SharedPreferences preferences = getContext().getSharedPreferences("agacoApp", Context.MODE_PRIVATE);
                 String token = preferences.getString("token", "");
 
                 Map<String, String>  params = new HashMap<String, String>();

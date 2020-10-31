@@ -80,7 +80,7 @@ public class ListaVentasFragment extends Fragment {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (dy > 0) {
+                /*if (dy > 0) {
                     int itemsVisibles = rvListaVentas.getLayoutManager().getChildCount();
                     int itemsTotales = rvListaVentas.getLayoutManager().getItemCount();
                     int posPrimerItemVisible = ((GridLayoutManager) rvListaVentas.getLayoutManager())
@@ -91,7 +91,7 @@ public class ListaVentasFragment extends Fragment {
                             fetchVentasSiguientes();
                         }
                     }
-                }
+                }*/
             }
         });
 

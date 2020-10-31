@@ -60,4 +60,6 @@
     <string name="valespecialista">Especialista:</string>
     <string name="lblBtnCancelar">Cancelar</string>
     <string name="lblBtnAsignarOperador">Asignar</string>
+    <string name="tituloCerrar">Cerrar la operación</string>
+    <string name="lblBtnCerrar">Cerrar</string>
 </resources>
